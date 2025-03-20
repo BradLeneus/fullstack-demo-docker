@@ -7,8 +7,8 @@ function CustomersList() {
 
 
     const loadAllCustomers = async () => {
-        const result = await axios.get("/api/customers");
-        setCustomers(result.data);
+        // const result = await axios.get("/api/customers");
+        // setCustomers(result.data);
     };
 
     useEffect(() => {
