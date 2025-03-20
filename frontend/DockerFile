@@ -1,4 +1,7 @@
-FROM node:20-alpine AS base 
+
+
+#STAGE 1 : BUILD
+FROM node:20-alpine AS build 
 WORKDIR /usr/src
 COPY package*.json ./
 RUN ["npm",  "install"]
@@ -6,4 +9,13 @@ COPY . .
 
 EXPOSE  5173
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "build"]
+
+
+#STAGE 2 : WEB SERVER
+FROM nginx:1.25.1-alpine AS prod
+
+COPY --from=build /usr/src/dist  /usr/share/nginx/html
+EXPOSE 80
+
+CMD ["nginx","-g","daemon off;"]
